@@ -1,15 +1,17 @@
+<!-- resources/views/auth/login.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Login</h2>
-        
+    <div class="container">
+        <h1>Login</h1>
+
+        <!-- Menampilkan error jika ada -->
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -19,19 +21,26 @@
                 </ul>
             </div>
         @endif
-        
-        <form action="{{ url('login') }}" method="POST">
+
+        <!-- Form Login -->
+        <form method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" required>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required autofocus>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" required>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required>
             </div>
+
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
+
+        <p>
+            Belum punya akun? <a href="#">Hubungi admin untuk mendaftar</a>.
+        </p>
     </div>
 </body>
 </html>
