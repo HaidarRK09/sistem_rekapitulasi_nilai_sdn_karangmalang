@@ -1,0 +1,107 @@
+/* Mengatur body dan html agar memenuhi seluruh tinggi layar */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Membuat flex container untuk menata elemen di tengah */
+.full-height {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Menjaga agar konten berada di tengah layar vertikal */
+}
+
+/* Styling untuk kontainer login */
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 30px; /* Memberikan jarak di atas kontainer */
+    margin-bottom: 30px; /* Memberikan jarak di bawah kontainer */
+}
+
+/* Styling logo */
+.logo-container {
+    margin-bottom: 20px;
+    margin-top: 20px; /* Memberikan jarak antara logo dan bagian atas */
+}
+
+.logo {
+    max-width: 120px;
+    height: auto;
+}
+
+/* Styling untuk judul */
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Styling untuk form input */
+.form-label {
+    font-weight: 600;
+}
+
+.form-control {
+    height: 45px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Styling untuk button */
+.btn-primary {
+    height: 45px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #007bff;
+    border: none;
+}
+
+/* Footer */
+.footer {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Hover efek untuk link */
+.footer a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries untuk perangkat kecil */
+@media (max-width: 576px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .logo {
+        max-width: 100px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+}
+
+/* Media Queries untuk tablet dan perangkat lebih besar */
+@media (max-width: 768px) {
+    .logo {
+        max-width: 120px;
+    }
+}
