@@ -13,6 +13,9 @@ class Nilai extends Model
         'siswa_id',
         'tugas1',
         'tugas2',
+        'tugas3',
+        'tugas4',
+        'tugas5',
         'uts',
         'uas',
     ];

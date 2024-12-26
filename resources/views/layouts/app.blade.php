@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100 h-screen font-sans">
@@ -30,19 +30,21 @@
                         </a>
                     </li>
                     <div class="mt-1 border-t pt-1">
-                    <li class="hover:bg-gray-200">
-                        <a href="#" class="flex items-center p-3 text-gray-700">
-                            <img src="{{ asset('images/teacher.png') }}" alt="Dashboard Icon" class="w-6 h-6">
-                            <span class="ml-3">Wali Kelas</span>
-                        </a>
-                    </li>
-                    <div class="mt-1 border-t pt-1">
-                    <li class="hover:bg-gray-200">
-                        <a href="#" class="flex items-center p-3 text-gray-700">
-                            <img src="{{ asset('images/student.png') }}" alt="Dashboard Icon" class="w-6 h-6">
-                            <span class="ml-3">Siswa</span>
-                        </a>
-                    </li>
+                        <li class="hover:bg-gray-200">
+                            <a href="#" class="flex items-center p-3 text-gray-700">
+                                <img src="{{ asset('images/teacher.png') }}" alt="Dashboard Icon" class="w-6 h-6">
+                                <span class="ml-3">Wali Kelas</span>
+                            </a>
+                        </li>
+                        <div class="mt-1 border-t pt-1">
+                            <li class="hover:bg-gray-200">
+                                <a href="#" class="flex items-center p-3 text-gray-700">
+                                    <img src="{{ asset('images/student.png') }}" alt="Dashboard Icon" class="w-6 h-6">
+                                    <span class="ml-3">Siswa</span>
+                                </a>
+                            </li>
+                        </div>
+                    </div>
                 </ul>
             </nav>
         </div>
@@ -68,14 +70,14 @@
             <main class="flex-1 bg-gray-50 p-6">
                 <div class="w-full h-full border-2 border-dashed border-gray-300 p-4">
                     <!-- Dynamic Content -->
-                    <div class="col-md-9">
+                    <div class="col">
                         @yield('content')
                     </div>
                 </div>
             </main>
         </div>
 
-        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

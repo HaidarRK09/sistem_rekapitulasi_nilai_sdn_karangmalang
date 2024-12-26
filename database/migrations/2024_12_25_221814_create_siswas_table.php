@@ -15,7 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('class');
-            $table->foreignId('walikelas_id')->constrained('users'); // Asumsi walikelas adalah user
+            $table->string('nisn')->unique();
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
+            $table->enum('gender', ['Laki-laki', 'Perempuan']);
+            $table->enum('religion', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Khonghucu', 'Tidak memiliki agama']);
+            $table->text('address');
+            $table->string('phone', 15);
+            $table->foreignId('walikelas_id')->constrained('users');
             $table->timestamps();
         });
     }

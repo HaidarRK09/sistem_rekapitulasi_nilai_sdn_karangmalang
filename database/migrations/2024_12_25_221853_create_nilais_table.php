@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('siswa_id')->constrained('siswas');
             $table->integer('tugas1')->nullable();
             $table->integer('tugas2')->nullable();
+            $table->integer('tugas3')->nullable();
+            $table->integer('tugas4')->nullable();
+            $table->integer('tugas5')->nullable();
             $table->integer('uts')->nullable();
             $table->integer('uas')->nullable();
             $table->timestamps();
