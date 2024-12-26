@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdmincController::class, 'index']);
 
     Route::get('/admin/walikelas/siswa', [WaliKelasController::class, 'index'])->name('walikelas.index');
+    Route::get('/walikelas/siswa{id}', [WaliKelasController::class, 'show'])->name('walikelas.show');
     Route::get('/admin/walikelas/siswa/create', [WaliKelasController::class, 'create'])->name('walikelas.create');
     Route::post('/admin/walikelas/siswa', [WaliKelasController::class, 'store'])->name('walikelas.store');
     Route::get('/admin/walikelas/siswa/{id}', [WaliKelasController::class, 'show'])->name('walikelas.show');

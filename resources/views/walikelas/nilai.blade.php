@@ -18,6 +18,21 @@
                     value="{{ $siswa->nilai->tugas2 ?? '' }}" min="0" max="100" step="any">
             </div>
             <div class="mb-3">
+                <label for="tugas3" class="form-label">Tugas 3</label>
+                <input type="number" name="tugas3" id="tugas3" class="form-control"
+                    value="{{ $siswa->nilai->tugas3 ?? '' }}" min="0" max="100" step="any">
+            </div>
+            <div class="mb-3">
+                <label for="tugas4" class="form-label">Tugas 4</label>
+                <input type="number" name="tugas4" id="tugas4" class="form-control"
+                    value="{{ $siswa->nilai->tugas4 ?? '' }}" min="0" max="100" step="any">
+            </div>
+            <div class="mb-3">
+                <label for="tugas5" class="form-label">Tugas 5</label>
+                <input type="number" name="tugas5" id="tugas5" class="form-control"
+                    value="{{ $siswa->nilai->tugas5 ?? '' }}" min="0" max="100" step="any">
+            </div>
+            <div class="mb-3">
                 <label for="uts" class="form-label">UTS</label>
                 <input type="number" name="uts" id="uts" class="form-control"
                     value="{{ $siswa->nilai->uts ?? '' }}" min="0" max="100" step="any">
