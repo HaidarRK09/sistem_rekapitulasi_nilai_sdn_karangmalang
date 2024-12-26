@@ -14,13 +14,6 @@ class AdmincController extends Controller
         echo "<a href='/logout'>Logout>></h1>";
     }
 
-    function admin()
-    {
-        echo "hallo, selamat datang admin";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
-    }
-
     function walikelas()
     {
         echo "hallo, selamat datang wali kelas";
@@ -34,12 +27,6 @@ class AdmincController extends Controller
         echo "<h1>" . Auth::user()->name . "</h1>";
         echo "<a href='/logout'>Logout>></h1>";
     }
-
-    // function guru()
-    // {
-    //     echo "hallo, selamat datan guru";
-    //     echo "<h1>" . Auth::user()->name . "</h1>";
-    //     echo "<a href='/logout'>Logout>></h1>";
-    // }
+x
     
 }
