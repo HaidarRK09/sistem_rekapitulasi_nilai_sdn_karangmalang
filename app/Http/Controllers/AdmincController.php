@@ -7,39 +7,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AdmincController extends Controller
 {
-    function index()
+    public function index()
     {
-        echo "hallo, selamat datang";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
+        return view('admin.dashboard'); // Ganti dengan halaman dashboard admin
     }
 
-    function admin()
+    public function siswa()
     {
-        echo "hallo, selamat datang admin";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
+        return view('admin.siswa.index'); // Halaman untuk mengelola data siswa
     }
 
-    function walikelas()
+    public function guru()
     {
-        echo "hallo, selamat datang wali kelas";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
+        return view('admin.guru.index'); // Halaman untuk mengelola data guru
     }
-
-    function siswa()
-    {
-        echo "hallo, selamat datang siswa";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
-    }
-
-    // function guru()
-    // {
-    //     echo "hallo, selamat datan guru";
-    //     echo "<h1>" . Auth::user()->name . "</h1>";
-    //     echo "<a href='/logout'>Logout>></h1>";
-    // }
     
 }
