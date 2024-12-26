@@ -15,6 +15,35 @@ class WaliKelasController extends Controller
 
         $siswas = Siswa::with('nilai')
             ->get()
+            ->map(function ($siswa) {
+                $subjects = [
+                    'agama',
+                    'pancasila',
+                    'indonesia',
+                    'matematika',
+                    'pjok',
+                    'sbk',
+                    'inggris',
+                    'muatanlokal'
+                ];
+                $totalAverage = 0;
+                $totalSubjects = count($subjects);
+                foreach ($subjects as $subject) {
+                    $totalScore = 0;
+                    $subjectTasks = ['tugas1', 'tugas2', 'tugas3', 'tugas4', 'tugas5', 'uts', 'uas'];
+
+                    foreach ($subjectTasks as $task) {
+                        $totalScore += $siswa->nilai->sum($subject . '_' . $task);
+                    }
+
+                    $subjectAverage = $totalScore / 7;  // Rata-rata per mata pelajaran
+                    $totalAverage += $subjectAverage;  // Tambahkan rata-rata setiap mata pelajaran
+                }
+
+                // Rata-rata keseluruhan
+                $siswa->average = $totalAverage / $totalSubjects;
+                return $siswa;
+            })
             ->sortBy(function ($siswa) use ($orderBy) {
                 if ($orderBy === 'name') {
                     return strtolower($siswa->name);
@@ -26,20 +55,11 @@ class WaliKelasController extends Controller
                 }
 
                 if ($orderBy === 'average') {
-                    return round(
-                        ($siswa->nilai->tugas1 ?? 0) +
-                            ($siswa->nilai->tugas2 ?? 0) +
-                            ($siswa->nilai->tugas3 ?? 0) +
-                            ($siswa->nilai->tugas4 ?? 0) +
-                            ($siswa->nilai->tugas5 ?? 0) +
-                            ($siswa->nilai->uts ?? 0) +
-                            ($siswa->nilai->uas ?? 0),
-                        2
-                    ) / 7;
+                    return $siswa->average;
                 }
 
                 return strtolower($siswa->name);
-            }, SORT_REGULAR, $orderDirection === 'asc')
+            }, SORT_REGULAR, $orderDirection === 'desc')
             ->values();
 
         return view('walikelas.index', compact('siswas', 'orderBy', 'orderDirection'));
@@ -114,29 +134,31 @@ class WaliKelasController extends Controller
     public function storeNilai(Request $request, $id)
     {
         $request->validate([
-            'tugas1' => 'nullable|numeric|min:0|max:100',
-            'tugas2' => 'nullable|numeric|min:0|max:100',
-            'tugas3' => 'nullable|numeric|min:0|max:100',
-            'tugas4' => 'nullable|numeric|min:0|max:100',
-            'tugas5' => 'nullable|numeric|min:0|max:100',
-            'uts' => 'nullable|numeric|min:0|max:100',
-            'uas' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.tugas1' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.tugas2' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.tugas3' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.tugas4' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.tugas5' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.uts' => 'nullable|numeric|min:0|max:100',
+            'nilai.*.uas' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $siswa = Siswa::findOrFail($id);
 
-        $nilai = Nilai::updateOrCreate(
-            ['siswa_id' => $siswa->id],
-            [
-                'tugas1' => $request->tugas1,
-                'tugas2' => $request->tugas2,
-                'tugas3' => $request->tugas3,
-                'tugas4' => $request->tugas4,
-                'tugas5' => $request->tugas5,
-                'uts' => $request->uts,
-                'uas' => $request->uas,
-            ]
-        );
+        foreach ($request->nilai as $subject => $scores) {
+            $nilai = Nilai::updateOrCreate(
+                ['siswa_id' => $siswa->id],
+                [
+                    "{$subject}_tugas1" => $scores['tugas1'] ?? null,
+                    "{$subject}_tugas2" => $scores['tugas2'] ?? null,
+                    "{$subject}_tugas3" => $scores['tugas3'] ?? null,
+                    "{$subject}_tugas4" => $scores['tugas4'] ?? null,
+                    "{$subject}_tugas5" => $scores['tugas5'] ?? null,
+                    "{$subject}_uts" => $scores['uts'] ?? null,
+                    "{$subject}_uas" => $scores['uas'] ?? null,
+                ]
+            );
+        }
 
         return redirect()->route('walikelas.index')->with('success', 'Nilai berhasil disimpan');
     }

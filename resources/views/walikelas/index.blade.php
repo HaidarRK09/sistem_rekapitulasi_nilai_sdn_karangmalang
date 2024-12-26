@@ -5,10 +5,8 @@
 
     <div class="container d-flex justify-content-center mt-5">
         <div class="w-100">
-            <!-- Tombol "Tambah Siswa" -->
             <a href="{{ route('walikelas.create') }}" class="btn btn-primary mb-3">Tambah Siswa</a>
 
-            <!-- Dropdown untuk Pengurutan -->
             <div class="dropdown d-inline-block ms-2">
                 <button class="btn btn-secondary dropdown-toggle mb-3" type="button" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -19,34 +17,42 @@
                         <a class="dropdown-item"
                             href="{{ route('walikelas.index', ['order_by' => 'name', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
                             Nama
+                            @if ($orderBy === 'name')
+                                <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item"
                             href="{{ route('walikelas.index', ['order_by' => 'class', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
                             Kelas
+                            @if ($orderBy === 'class')
+                                <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item"
                             href="{{ route('walikelas.index', ['order_by' => 'average', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
                             Rata-Rata Nilai
+                            @if ($orderBy === 'average')
+                                <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'name', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
+                            href="{{ route('walikelas.index', ['order_by' => 'name', 'order_direction' => 'asc']) }}">
                             Reset
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <!-- Tabel Daftar Siswa -->
             <table class="table table-bordered table-striped text-center">
                 <thead class="table-dark">
                     <tr>
-                        <th>No.</th> <!-- Kolom untuk nomor urut -->
+                        <th>No.</th>
                         <th>Nama Siswa</th>
                         <th>Kelas</th>
                         <th>Rata-Rata Nilai</th>
@@ -55,31 +61,16 @@
                 </thead>
                 <tbody>
                     @foreach ($siswas as $index => $siswa)
-                        <!-- Menambahkan variabel $index untuk nomor urut -->
                         <tr>
-                            <td>{{ $index + 1 }}</td> <!-- Menampilkan nomor urut -->
-                            <td style="word-wrap: break-word; max-width: 200px;">
+                            <td>{{ $index + 1 }}</td>
+                            <td>
                                 <a href="{{ route('walikelas.show', $siswa->id) }}">{{ $siswa->name }}</a>
                             </td>
                             <td>{{ $siswa->class }}</td>
                             <td>
-                                @if ($siswa->nilai)
-                                    <a href="{{ route('walikelas.nilai', $siswa->id) }}" class="text-decoration-none">
-                                        {{ round(
-                                            (($siswa->nilai->tugas1 ?? 0) +
-                                                ($siswa->nilai->tugas2 ?? 0) +
-                                                ($siswa->nilai->tugas3 ?? 0) +
-                                                ($siswa->nilai->tugas4 ?? 0) +
-                                                ($siswa->nilai->tugas5 ?? 0) +
-                                                ($siswa->nilai->uts ?? 0) +
-                                                ($siswa->nilai->uas ?? 0)) /
-                                                7,
-                                            2,
-                                        ) }}
-                                    </a>
-                                @else
-                                    <a href="{{ route('walikelas.nilai', $siswa->id) }}" class="text-decoration-none">-</a>
-                                @endif
+                                <a href="{{ route('walikelas.nilai', $siswa->id) }}" class="text-decoration-none">
+                                    {{ $siswa->average ? number_format($siswa->average, 2) : '-' }}
+                                </a>
                             </td>
                             <td>
                                 <form action="{{ route('walikelas.destroy', $siswa->id) }}" method="POST"
@@ -87,8 +78,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus siswa ini?')">Hapus
-                                        Data</button>
+                                        onclick="return confirm('Apakah Anda yakin ingin menghapus siswa ini?')">Hapus</button>
                                 </form>
                             </td>
                         </tr>
