@@ -56,13 +56,25 @@
                 <div>
                     <h1 class="text-xl font-semibold">Dashboard</h1>
                 </div>
-                <div class="flex items-center">
-                    <!-- User Info -->
-                    <span class="mr-4 text-gray-700">{{ Auth::user()->name }}</span>
-                    <!-- Logout Button -->
-                    <a href="{{ url('logout') }}" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                        Logout
-                    </a>
+                <div class="flex items-center relative">
+                    <!-- Profile Button -->
+                    <button class="flex items-center focus:outline-none" id="profileMenuButton"
+                        onclick="toggleDropdown()">
+                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/teacher.png') }}"
+                            alt="Profile" class="w-8 h-8 rounded-full">
+                        <span class="ml-2 text-gray-700">{{ Auth::user()->name }}</span>
+                        <svg class="w-4 h-4 ml-1 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="absolute right-0 mt-6 w-48 bg-white rounded-md shadow-lg hidden z-10">
+                        <a href="{{ url('walikelas/profile') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                        <a href="{{ url('logout') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                    </div>
                 </div>
             </header>
 
@@ -78,6 +90,21 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function toggleDropdown() {
+                const dropdown = document.getElementById('profileDropdown');
+                dropdown.classList.toggle('hidden');
+            }
+
+            // Tutup dropdown saat klik di luar
+            document.addEventListener('click', function(event) {
+                const dropdown = document.getElementById('profileDropdown');
+                const button = document.getElementById('profileMenuButton');
+                if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        </script>
 </body>
 
 </html>

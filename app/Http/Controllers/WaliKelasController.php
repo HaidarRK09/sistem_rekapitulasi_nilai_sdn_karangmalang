@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Models\Nilai;
+use App\Models\Walkel;
 use Illuminate\Http\Request;
 
 class WaliKelasController extends Controller
@@ -36,11 +37,10 @@ class WaliKelasController extends Controller
                         $totalScore += $siswa->nilai->sum($subject . '_' . $task);
                     }
 
-                    $subjectAverage = $totalScore / 7;  // Rata-rata per mata pelajaran
-                    $totalAverage += $subjectAverage;  // Tambahkan rata-rata setiap mata pelajaran
+                    $subjectAverage = $totalScore / 7;
+                    $totalAverage += $subjectAverage;
                 }
 
-                // Rata-rata keseluruhan
                 $siswa->average = $totalAverage / $totalSubjects;
                 return $siswa;
             })
@@ -123,10 +123,17 @@ class WaliKelasController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'class' => 'required|string|max:255',
+            'nisn' => 'required|string|max:255',
+            'place_of_birth' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'gender' => 'required|string|max:255',
+            'religion' => 'required|string|max:255',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:255',
         ]);
 
         $siswa = Siswa::findOrFail($id);
-        $siswa->update($request->only('name', 'class'));
+        $siswa->update($request->only('name', 'class', 'nisn', 'place_of_birth', 'date_of_birth', 'gender', 'religion', 'address', 'phone'));
 
         return redirect()->route('walikelas.index');
     }
@@ -175,5 +182,52 @@ class WaliKelasController extends Controller
         }
 
         return redirect()->route('walikelas.index')->with('success', 'Nilai berhasil disimpan');
+    }
+
+    public function editProfile()
+    {
+        $user = auth()->user();
+
+        $waliKelas = $user->waliKelas;
+        if (!$waliKelas) {
+            return redirect()->route('walikelas.profile')->with('error', 'Data Wali Kelas tidak ditemukan!');
+        }
+
+        $walkels = Walkel::all();
+
+        return view('walikelas.profile', compact('waliKelas', 'walkels'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nip' => 'required|string|max:20',
+            'nuptk' => 'nullable|string|max:20',
+            'place_of_birth' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'education' => 'nullable|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'rank' => 'nullable|string|max:255',
+        ]);
+
+        $user = auth()->user();
+        $user->update(['name' => $request->name]);
+
+        $waliKelas = Walkel::where('user_id', $user->id)->first();
+        if ($waliKelas) {
+            $waliKelas->update([
+                'name' => $request->name,
+                'nip' => $request->nip,
+                'nuptk' => $request->nuptk,
+                'place_of_birth' => $request->place_of_birth,
+                'date_of_birth' => $request->date_of_birth,
+                'education' => $request->education,
+                'position' => $request->position,
+                'rank' => $request->rank,
+            ]);
+        }
+
+        return redirect()->route('walikelas.profile')->with('success', 'Profil berhasil diperbarui!');
     }
 }

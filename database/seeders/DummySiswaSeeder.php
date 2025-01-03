@@ -12,29 +12,32 @@ class DummySiswaSeeder extends Seeder
      */
     public function run(): void
     {
+        // Hapus semua data lama dari tabel siswas
+        Siswa::query()->delete();
+
         $siswaData = [
             [
-                'name' => 'Siswa A',
-                'nisn' => '1234567890',
+                'name' => 'Bakri',
+                'nisn' => '0011223344',
                 'place_of_birth' => 'Jakarta, DKI Jakarta',
                 'date_of_birth' => '2005-01-15',
                 'gender' => 'Laki-laki',
                 'religion' => 'Islam',
                 'address' => 'Jl. Merdeka No. 10, Jakarta',
                 'phone' => '081234567890',
-                'class' => '10A',
+                'class' => '5A',
                 'walikelas_id' => 2,
             ],
             [
-                'name' => 'Siswa B',
-                'nisn' => '1234567891',
+                'name' => 'Adrian',
+                'nisn' => '0099887766',
                 'place_of_birth' => 'Bandung, Jawa Barat',
                 'date_of_birth' => '2006-02-20',
                 'gender' => 'Perempuan',
                 'religion' => 'Kristen',
                 'address' => 'Jl. Braga No. 25, Bandung',
                 'phone' => '081987654321',
-                'class' => '10B',
+                'class' => '3B',
                 'walikelas_id' => 2,
             ],
         ];

@@ -34,7 +34,7 @@ class SesiController extends Controller
             if(Auth::user()->role =='siswa') {
                 return redirect('admin/siswa');
             } elseif (Auth::user()->role=='wali_kelas'){
-                return redirect('admin/walikelas/siswa');
+                return redirect('walikelas/siswa');
             // } elseif (Auth::user()->role=='guru'){
             //     return redirect('admin/guru');
             } elseif (Auth::user()->role=='admin'){

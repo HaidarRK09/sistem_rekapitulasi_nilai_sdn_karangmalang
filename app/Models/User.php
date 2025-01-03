@@ -54,4 +54,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Siswa::class, 'walikelas_id');
     }
+
+    /**
+     * Relasi dengan Walkel
+     */
+    public function waliKelas()
+    {
+        return $this->hasOne(Walkel::class);
+    }
 }
