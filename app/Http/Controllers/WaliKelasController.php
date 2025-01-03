@@ -10,8 +10,8 @@ class WaliKelasController extends Controller
 {
     public function index(Request $request)
     {
-        $orderBy = $request->input('order_by', 'name');
-        $orderDirection = $request->input('order_direction', 'asc');
+        $orderBy = $request->input('order_by', 'id');
+        $orderDirection = $request->input('order_direction', 'desc');
 
         $siswas = Siswa::with('nilai')
             ->get()
@@ -87,15 +87,29 @@ class WaliKelasController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'class' => 'required|string|max:255',
+            'nisn' => 'required|string|max:255',
+            'place_of_birth' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'gender' => 'required|string|max:255',
+            'religion' => 'required|string|max:255',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:255',
         ]);
 
         $siswa = Siswa::create([
             'name' => $request->name,
             'class' => $request->class,
+            'nisn' => $request->nisn,
+            'place_of_birth' => $request->place_of_birth,
+            'date_of_birth' => $request->date_of_birth,
+            'gender' => $request->gender,
+            'religion' => $request->religion,
+            'address' => $request->address,
+            'phone' => $request->phone,
             'walikelas_id' => auth()->id(),
         ]);
 
-        return redirect()->route('walikelas.index');
+        return redirect()->route('walikelas.index')->with('success', 'Siswa berhasil ditambahkan');
     }
 
     public function edit($id)

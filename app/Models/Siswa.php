@@ -15,7 +15,8 @@ class Siswa extends Model
         'gender',
         'religion',
         'address',
-        'phone'
+        'phone',
+        'walikelas_id'
     ];
 
     protected $casts = [

@@ -42,7 +42,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'name', 'order_direction' => 'asc']) }}">
+                            href="{{ route('walikelas.index', ['order_by' => 'id', 'order_direction' => 'desc']) }}">
                             Reset
                         </a>
                     </li>
@@ -63,16 +63,12 @@
                     @foreach ($siswas as $index => $siswa)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>
-                                <a href="{{ route('walikelas.show', $siswa->id) }}">{{ $siswa->name }}</a>
-                            </td>
+                            <td>{{ $siswa->name }}</td>
                             <td>{{ $siswa->class }}</td>
+                            <td>{{ $siswa->average ? number_format($siswa->average, 2) : '-' }}</td>
                             <td>
-                                <a href="{{ route('walikelas.nilai', $siswa->id) }}" class="text-decoration-none">
-                                    {{ $siswa->average ? number_format($siswa->average, 2) : '-' }}
-                                </a>
-                            </td>
-                            <td>
+                                <a href="{{ route('walikelas.show', $siswa->id) }}" class="btn btn-sm btn-info">Edit Data</a>
+                                <a href="{{ route('walikelas.nilai', $siswa->id) }}" class="btn btn-sm btn-warning">Edit Nilai</a>
                                 <form action="{{ route('walikelas.destroy', $siswa->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
