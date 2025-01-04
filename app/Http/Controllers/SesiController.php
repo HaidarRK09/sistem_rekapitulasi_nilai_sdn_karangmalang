@@ -32,7 +32,7 @@ class SesiController extends Controller
         // Cek apakah kredensial valid
         if (Auth::attempt($infologin)) {
             if(Auth::user()->role =='siswa') {
-                return redirect('admin/siswa');
+                return redirect('/siswa');
             } elseif (Auth::user()->role=='wali_kelas'){
                 return redirect('walikelas/siswa');
             // } elseif (Auth::user()->role=='guru'){

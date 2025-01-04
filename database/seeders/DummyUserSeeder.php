@@ -36,7 +36,5 @@ class DummyUserSeeder extends Seeder
         foreach ($userData as $user) {
             User::create($user);
         }
-
-        $this->call(DummySiswaSeeder::class);
     }
 }

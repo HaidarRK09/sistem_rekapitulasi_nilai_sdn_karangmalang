@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('class');
+            $table->enum('class', ['Kelas 1', 'Kelas 2', 'Kelas 3', 'Kelas 4', 'Kelas 5', 'Kelas 6']);
             $table->string('nisn')->unique();
             $table->string('place_of_birth');
             $table->date('date_of_birth');
@@ -22,7 +22,8 @@ return new class extends Migration
             $table->enum('religion', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Khonghucu', 'Tidak memiliki agama']);
             $table->text('address');
             $table->string('phone', 15);
-            $table->foreignId('walikelas_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            // $table->foreignId('walikelas_id')->constrained('users');
             $table->timestamps();
         });
     }

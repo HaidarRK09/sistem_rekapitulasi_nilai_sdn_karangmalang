@@ -127,4 +127,9 @@ class Nilai extends Model
         'muatanlokal_uts' => 'decimal:2',
         'muatanlokal_uas' => 'decimal:2',
     ];
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class);
+    }
 }

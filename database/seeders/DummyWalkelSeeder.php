@@ -28,7 +28,7 @@ class DummyWalkelSeeder extends Seeder
             'place_of_birth' => 'Bandung',
             'date_of_birth' => '1980-05-10',
             'education' => 'S1 Pendidikan',
-            'position' => 'Wali Kelas 5A',
+            'position' => 'Wali Kelas 5',
             'rank' => 'Golongan IV/a',
         ]);
 
@@ -47,7 +47,7 @@ class DummyWalkelSeeder extends Seeder
             'place_of_birth' => 'Jakarta',
             'date_of_birth' => '1978-08-15',
             'education' => 'S1 Pendidikan Matematika',
-            'position' => 'Wali Kelas 3B',
+            'position' => 'Wali Kelas 3',
             'rank' => 'Golongan III/c',
         ]);
     }

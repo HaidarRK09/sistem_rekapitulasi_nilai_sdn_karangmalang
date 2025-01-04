@@ -16,17 +16,23 @@ class Siswa extends Model
         'religion',
         'address',
         'phone',
-        'walikelas_id'
+        'user_id',
+        // 'walikelas_id'
     ];
 
     protected $casts = [
         'date_of_birth' => 'datetime',
     ];
 
-    public function walikelas()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'walikelas_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+    // public function walikelas()
+    // {
+    //     return $this->belongsTo(User::class, 'walikelas_id');
+    // }
     
     public function nilai()
     {

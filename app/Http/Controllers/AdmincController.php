@@ -11,38 +11,4 @@ class AdmincController extends Controller
     {
         return view('admin.dashboard', ['user' => Auth::user()]);
     }
-
-    function indexWaliKelas()
-{
-    return view('admin.walikelas.index', ['user' => Auth::user()]);
-}
-
-    function admin()
-    {
-        echo "hallo, selamat datang admin";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
-    }
-
-    function walikelas()
-    {
-        echo "hallo, selamat datang wali kelas";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
-    }
-
-    function siswa()
-    {
-        echo "hallo, selamat datang siswa";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
-    }
-
-    function indexSiswa()
-    {
-        return view('admin.siswa.index', ['user' => Auth::user()]);
-    }
-
-
-    
 }
