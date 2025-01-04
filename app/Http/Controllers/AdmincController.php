@@ -12,6 +12,11 @@ class AdmincController extends Controller
         return view('admin.dashboard', ['user' => Auth::user()]);
     }
 
+    function indexWaliKelas()
+{
+    return view('admin.walikelas.index', ['user' => Auth::user()]);
+}
+
     function admin()
     {
         echo "hallo, selamat datang admin";
@@ -33,11 +38,11 @@ class AdmincController extends Controller
         echo "<a href='/logout'>Logout>></h1>";
     }
 
-    // function guru()
-    // {
-    //     echo "hallo, selamat datan guru";
-    //     echo "<h1>" . Auth::user()->name . "</h1>";
-    //     echo "<a href='/logout'>Logout>></h1>";
-    // }
+    function indexSiswa()
+    {
+        return view('admin.siswa.index', ['user' => Auth::user()]);
+    }
+
+
     
 }
