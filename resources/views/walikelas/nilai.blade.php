@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('walikelas.layouts')
 
 @section('content')
     <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 30px;">Nilai Siswa</h1>

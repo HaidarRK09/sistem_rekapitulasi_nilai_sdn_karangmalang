@@ -9,12 +9,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+        }
+
+        .card-hover:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 h-screen font-sans">
     <div class="flex h-full">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg">
+        <aside class="sidebar w-64 bg-white shadow-lg">
             <!-- Sidebar Header -->
             <div class="flex items-center justify-center h-16 bg-blue-500 text-white font-bold">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,20 +36,24 @@
             <!-- Sidebar Navigation -->
             <nav class="mt-5">
                 <ul class="space-y-1">
-                    <!-- Sidebar Item -->
+                    {{-- <li class="hover:bg-gray-200">
+                        <a href="#" class="flex items-center p-3 text-gray-700">
+                            <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" class="w-6 h-6">
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li> --}}
                     <li class="hover:bg-gray-200">
                         <a href="#" class="flex items-center p-3 text-gray-700">
                             <img src="{{ asset('images/teacher.png') }}" alt="Teacher Icon" class="w-6 h-6">
                             <span class="ml-3">Wali Kelas</span>
                         </a>
                     </li>
-                    <!-- Additional Sidebar Items (Commented Out for Future Use) -->
-                    <!-- <li class="hover:bg-gray-200">
+                    {{-- <li class="hover:bg-gray-200">
                         <a href="#" class="flex items-center p-3 text-gray-700">
                             <img src="{{ asset('images/student.png') }}" alt="Student Icon" class="w-6 h-6">
                             <span class="ml-3">Siswa</span>
                         </a>
-                    </li> -->
+                    </li> --}}
                 </ul>
             </nav>
         </aside>
@@ -65,10 +80,7 @@
                 </div>
             </header>
 
-            <!-- Content Area -->
-            <main class="flex-1 bg-gray-50 p-6">
-                <div class="w-full h-full border-2 border-dashed border-gray-300 p-4">
-                    <!-- Dynamic Content -->
+                    <!-- Dynamic Content Section -->
                     <div class="col">
                         @yield('content')
                     </div>
@@ -79,7 +91,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
     <script>
         // Toggle dropdown visibility
         function toggleDropdown() {

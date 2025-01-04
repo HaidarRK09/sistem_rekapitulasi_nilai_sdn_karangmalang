@@ -7,104 +7,105 @@
     <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+        }
+
+        .card-hover:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 h-screen font-sans">
-    <div class="flex h-full">
+<body class="bg-light">
+    <div class="d-flex">
         <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-lg">
-            <div class="flex items-center justify-center h-16 bg-blue-500 text-white font-bold">
-                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 10h11M9 21l-6-6 6-6m11 6h-8" />
-                </svg>
-                <span class="ml-2">SDN Karangmalang</span>
+        <div class="sidebar bg-white shadow-lg p-3">
+            <div class="text-center mb-4">
+                <h4 class="text-primary fw-bold">SDN Karangmalang</h4>
             </div>
-            <nav class="mt-5">
-                <ul>
-                    <li class="hover:bg-gray-200">
-                        <a href="#" class="flex items-center p-3 text-gray-700">
-                            <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" class="w-6 h-6">
-                            <span class="ml-3">Dashboard</span>
+            <nav>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <a href="#" class="d-flex align-items-center text-decoration-none text-dark p-2 rounded hover-bg-light">
+                            <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" class="me-2" width="24" height="24">
+                            <span>Dashboard</span>
                         </a>
                     </li>
-                    <div class="mt-1 border-t pt-1">
-                        <li class="hover:bg-gray-200">
-                            <a href="#" class="flex items-center p-3 text-gray-700">
-                                <img src="{{ asset('images/teacher.png') }}" alt="Dashboard Icon" class="w-6 h-6">
-                                <span class="ml-3">Wali Kelas</span>
-                            </a>
-                        </li>
-                        <div class="mt-1 border-t pt-1">
-                            <li class="hover:bg-gray-200">
-                                <a href="#" class="flex items-center p-3 text-gray-700">
-                                    <img src="{{ asset('images/student.png') }}" alt="Dashboard Icon" class="w-6 h-6">
-                                    <span class="ml-3">Siswa</span>
-                                </a>
-                            </li>
-                        </div>
-                    </div>
+                    <li class="mb-3">
+                        <a href="#" class="d-flex align-items-center text-decoration-none text-dark p-2 rounded hover-bg-light">
+                            <img src="{{ asset('images/teacher.png') }}" alt="Teacher Icon" class="me-2" width="24" height="24">
+                            <span>Wali Kelas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="d-flex align-items-center text-decoration-none text-dark p-2 rounded hover-bg-light">
+                            <img src="{{ asset('images/student.png') }}" alt="Student Icon" class="me-2" width="24" height="24">
+                            <span>Siswa</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
 
         <!-- Main Layout -->
-        <div class="flex-1 flex flex-col">
+        <div class="flex-grow-1">
             <!-- Navbar -->
-            <header class="h-16 bg-white shadow flex items-center justify-between px-6">
-                <div>
-                    <h1 class="text-xl font-semibold">Dashboard</h1>
-                </div>
-                <div class="flex items-center relative">
-                    <!-- Profile Button -->
-                    <button class="flex items-center focus:outline-none" id="profileMenuButton"
-                        onclick="toggleDropdown()">
-                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/teacher.png') }}"
-                            alt="Profile" class="w-8 h-8 rounded-full">
-                        <span class="ml-2 text-gray-700">{{ Auth::user()->name }}</span>
-                        <svg class="w-4 h-4 ml-1 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-
-                    <!-- Dropdown Menu -->
-                    <div id="profileDropdown"
-                        class="absolute right-0 mt-6 w-48 bg-white rounded-md shadow-lg hidden z-10">
-                        <a href="{{ url('walikelas/profile') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
-                        <a href="{{ url('logout') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand fw-bold" href="#">Dashboard</a>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="profileMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ Auth::user()->profile_photo_url ?? asset('images/teacher.png') }}" alt="Profile" class="rounded-circle" width="30">
+                            <span class="ms-2">{{ Auth::user()->name }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileMenuButton">
+                            <li><a class="dropdown-item" href="{{ url('walikelas/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ url('logout') }}">Logout</a></li>
+                        </ul>
                     </div>
                 </div>
-            </header>
+            </nav>
 
             <!-- Content Area -->
-            <main class="flex-1 bg-gray-50 p-6">
-                <div class="w-full h-full border-2 border-dashed border-gray-300 p-4">
-                    <!-- Dynamic Content -->
-                    <div class="col">
-                        @yield('content')
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card card-hover border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" width="50" class="mb-3">
+                                <h5 class="card-title">Dashboard Overview</h5>
+                                <p class="card-text">Lihat performa dan data sekolah secara ringkas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-hover border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('images/teacher.png') }}" alt="Teacher Icon" width="50" class="mb-3">
+                                <h5 class="card-title">Data Wali Kelas</h5>
+                                <p class="card-text">Manajemen data wali kelas dengan mudah.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-hover border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('images/student.png') }}" alt="Student Icon" width="50" class="mb-3">
+                                <h5 class="card-title">Data Siswa</h5>
+                                <p class="card-text">Kelola data siswa dengan efisien.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            function toggleDropdown() {
-                const dropdown = document.getElementById('profileDropdown');
-                dropdown.classList.toggle('hidden');
-            }
-
-            // Tutup dropdown saat klik di luar
-            document.addEventListener('click', function(event) {
-                const dropdown = document.getElementById('profileDropdown');
-                const button = document.getElementById('profileMenuButton');
-                if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-                    dropdown.classList.add('hidden');
-                }
-            });
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

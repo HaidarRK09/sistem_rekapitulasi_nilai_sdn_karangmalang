@@ -1,1 +1,1 @@
-@extends('admin.asd')
+@extends('layouts.app')

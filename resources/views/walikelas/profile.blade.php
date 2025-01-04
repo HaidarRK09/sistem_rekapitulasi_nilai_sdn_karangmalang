@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('walikelas.layouts')
 
 @section('content')
 <div class="container">
