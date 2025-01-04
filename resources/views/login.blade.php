@@ -8,7 +8,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <title>Login</title>
+    <link rel="icon" href="https://tse2.mm.bing.net/th?id=OIP.r1wF2U_5JclIewGU0DAW5wHaHa&pid=Api" type="image/x-icon">
+    <title>Login Sistem Rekapitulasi Nilai SDN Karangmalang</title>
     <style>
         .center-container {
             max-width: 400px;

@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDN Karangmalang</title>
+    <title>Sistem Rekapitulasi Nilai SDN Karangmalang</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="https://tse2.mm.bing.net/th?id=OIP.r1wF2U_5JclIewGU0DAW5wHaHa&pid=Api" type="image/x-icon">
 </head>
 
 <body class="bg-gray-100 h-screen font-sans">
@@ -90,18 +91,6 @@
                         </svg>
                     </button>
 
-                    {{-- <!-- Dropdown Menu -->
-                    <div id="profileDropdown"
-                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
-                        <a href="{{ route(Auth::user()->role . '.profile') }}"
-                            class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
-                        <form action="{{ route('logout') }}" method="POST"
-                            class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                            @csrf
-                            <button type="submit" class="w-full text-left">Logout</button>
-                        </form>
-                    </div> --}}
-
                     <!-- Dropdown Menu -->
                     <div id="profileDropdown"
                         class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
@@ -111,9 +100,6 @@
                         @elseif (Auth::user()->role == 'walikelas')
                             <a href="{{ route('walikelas.profile') }}"
                                 class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
-                            {{-- @elseif (Auth::user()->role == 'admin')
-                            <a href="{{ route('admin.profile') }}"
-                                class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a> --}}
                         @endif
                         <form action="{{ route('logout') }}" method="POST"
                             class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
