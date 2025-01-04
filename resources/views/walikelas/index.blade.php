@@ -42,7 +42,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'id', 'order_direction' => 'desc']) }}">
+                            href="{{ route('walikelas.index', ['order_by' => 'id', 'order_direction' => 'asc']) }}">
                             Reset
                         </a>
                     </li>

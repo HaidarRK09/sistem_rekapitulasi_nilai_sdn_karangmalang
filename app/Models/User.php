@@ -50,9 +50,9 @@ class User extends Authenticatable
     /**
      * Relasi dengan Siswa
      */
-    public function siswas()
+    public function siswa()
     {
-        return $this->hasMany(Siswa::class, 'walikelas_id');
+        return $this->hasOne(Siswa::class, 'user_id');
     }
 
     /**

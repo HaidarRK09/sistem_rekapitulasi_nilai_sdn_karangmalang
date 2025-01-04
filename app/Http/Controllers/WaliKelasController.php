@@ -12,9 +12,17 @@ class WaliKelasController extends Controller
     public function index(Request $request)
     {
         $orderBy = $request->input('order_by', 'id');
-        $orderDirection = $request->input('order_direction', 'desc');
+        $orderDirection = $request->input('order_direction', 'asc');
+
+        $user = auth()->user();
+        $waliKelas = Walkel::where('user_id', $user->id)->first();
+        
+        $class = str_replace('Wali Kelas ', 'Kelas ', $waliKelas->position);
 
         $siswas = Siswa::with('nilai')
+            ->where('class', $class)
+            // ->where('walikelas_id', $user->id)
+            ->orderBy($orderBy, $orderDirection)
             ->get()
             ->map(function ($siswa) {
                 $subjects = [
@@ -59,7 +67,7 @@ class WaliKelasController extends Controller
                 }
 
                 return strtolower($siswa->name);
-            }, SORT_REGULAR, $orderDirection === 'desc')
+            }, SORT_REGULAR, $orderDirection === 'asc')
             ->values();
 
         return view('walikelas.index', compact('siswas', 'orderBy', 'orderDirection'));
@@ -106,7 +114,7 @@ class WaliKelasController extends Controller
             'religion' => $request->religion,
             'address' => $request->address,
             'phone' => $request->phone,
-            'walikelas_id' => auth()->id(),
+            // 'walikelas_id' => auth()->id(),
         ]);
 
         return redirect()->route('walikelas.index')->with('success', 'Siswa berhasil ditambahkan');
@@ -135,7 +143,7 @@ class WaliKelasController extends Controller
         $siswa = Siswa::findOrFail($id);
         $siswa->update($request->only('name', 'class', 'nisn', 'place_of_birth', 'date_of_birth', 'gender', 'religion', 'address', 'phone'));
 
-        return redirect()->route('walikelas.index');
+        return redirect()->route('walikelas.show', $siswa->id)->with('success', 'Data berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -188,14 +196,15 @@ class WaliKelasController extends Controller
     {
         $user = auth()->user();
 
-        $waliKelas = $user->waliKelas;
+        $waliKelas = $user->waliKelas ?? new \stdClass();
+        // $waliKelas = $user->waliKelas;
         if (!$waliKelas) {
             return redirect()->route('walikelas.profile')->with('error', 'Data Wali Kelas tidak ditemukan!');
         }
 
         $walkels = Walkel::all();
 
-        return view('walikelas.profile', compact('waliKelas', 'walkels'));
+        return view('walikelas.profile', compact('user', 'waliKelas'));
     }
 
     public function updateProfile(Request $request)
@@ -217,6 +226,18 @@ class WaliKelasController extends Controller
         $waliKelas = Walkel::where('user_id', $user->id)->first();
         if ($waliKelas) {
             $waliKelas->update([
+                'name' => $request->name,
+                'nip' => $request->nip,
+                'nuptk' => $request->nuptk,
+                'place_of_birth' => $request->place_of_birth,
+                'date_of_birth' => $request->date_of_birth,
+                'education' => $request->education,
+                'position' => $request->position,
+                'rank' => $request->rank,
+            ]);
+        } else {
+            Walkel::create([
+                'user_id' => $user->id,
                 'name' => $request->name,
                 'nip' => $request->nip,
                 'nuptk' => $request->nuptk,

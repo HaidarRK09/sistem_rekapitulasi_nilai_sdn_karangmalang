@@ -1,41 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 30px;">Edit Siswa</h1>
-    <div class="container mt-5">
-        <form action="{{ route('walikelas.update', $siswa->id) }}" method="POST">
+    <div class="container">
+        <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 30px;">Profil Siswa</h1>
+
+        <!-- Form Edit Profil Siswa -->
+        <form method="POST" action="{{ route('siswa.updateProfile') }}">
             @csrf
-            @method('PUT')
             <div class="mb-3">
-                <label for="name" class="form-label">Nama Siswa</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ $siswa->name }}" required>
+                <label for="name" class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $siswa->name) }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="class" class="form-label">Kelas</label>
-                <select name="class" id="class" class="form-control" required>
-                    <option value="Kelas 1" {{ $siswa->class == 'Kelas 1' ? 'selected' : '' }}>Kelas 1</option>
-                    <option value="Kelas 2" {{ $siswa->class == 'Kelas 2' ? 'selected' : '' }}>Kelas 2</option>
-                    <option value="Kelas 3" {{ $siswa->class == 'Kelas 3' ? 'selected' : '' }}>Kelas 3</option>
-                    <option value="Kelas 4" {{ $siswa->class == 'Kelas 4' ? 'selected' : '' }}>Kelas 4</option>
-                    <option value="Kelas 5" {{ $siswa->class == 'Kelas 5' ? 'selected' : '' }}>Kelas 5</option>
-                    <option value="Kelas 6" {{ $siswa->class == 'Kelas 6' ? 'selected' : '' }}>Kelas 6</option>
+                <select class="form-control" id="class" name="class" required>
+                    <option value="Kelas 1" {{ old('class', $siswa->class) == 'Kelas 1' ? 'selected' : '' }}>Kelas 1</option>
+                    <option value="Kelas 2" {{ old('class', $siswa->class) == 'Kelas 2' ? 'selected' : '' }}>Kelas 2</option>
+                    <option value="Kelas 3" {{ old('class', $siswa->class) == 'Kelas 3' ? 'selected' : '' }}>Kelas 3</option>
+                    <option value="Kelas 4" {{ old('class', $siswa->class) == 'Kelas 4' ? 'selected' : '' }}>Kelas 4</option>
+                    <option value="Kelas 5" {{ old('class', $siswa->class) == 'Kelas 5' ? 'selected' : '' }}>Kelas 5</option>
+                    <option value="Kelas 6" {{ old('class', $siswa->class) == 'Kelas 6' ? 'selected' : '' }}>Kelas 6</option>
                 </select>
             </div>
 
             <div class="mb-3">
                 <label for="nisn" class="form-label">NISN</label>
-                <input type="text" name="nisn" id="nisn" class="form-control" value="{{ $siswa->nisn }}" required>
+                <input type="text" class="form-control" id="nisn" name="nisn" value="{{ old('nisn', $siswa->nisn) }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="place_of_birth" class="form-label">Tempat Lahir</label>
-                <input type="text" name="place_of_birth" id="place_of_birth" class="form-control" value="{{ $siswa->place_of_birth }}" required>
+                <input type="text" class="form-control" id="place_of_birth" name="place_of_birth" value="{{ old('place_of_birth', $siswa->place_of_birth) }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="date_of_birth" class="form-label">Tanggal Lahir</label>
-                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control" value="{{ $siswa->date_of_birth->format('Y-m-d') }}" required>
+                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth', $siswa->date_of_birth ? $siswa->date_of_birth->format('Y-m-d') : '') }}" required>
             </div>
 
             <div class="mb-3">
@@ -59,17 +60,12 @@
             </div>
 
             <div class="mb-3">
-                <label for="address" class="form-label">Alamat</label>
-                <textarea name="address" id="address" class="form-control" required>{{ $siswa->address }}</textarea>
+                <label for="phone" class="form-label">Nomor Telepon</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $siswa->phone) }}" required>
             </div>
 
-            <div class="mb-3">
-                <label for="phone" class="form-label">Nomor Telepon Orang Tua / Wali</label>
-                <input type="text" name="phone" id="phone" class="form-control" value="{{ $siswa->phone }}" required>
-            </div>
-
-            <a href="{{ url()->previous() }}" class="btn btn-danger">Kembali</a>
-            <button type="submit" class="btn btn-primary ml-2">Simpan</button>
+            <a href="{{ route('siswa.index') }}" class="btn btn-danger me-2">Kembali</a>
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>
 @endsection

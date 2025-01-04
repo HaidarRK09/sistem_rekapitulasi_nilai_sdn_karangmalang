@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('education')->nullable();
-            $table->string('position')->nullable();
+            $table->enum('position', ['Wali Kelas 1', 'Wali Kelas 2', 'Wali Kelas 3', 'Wali Kelas 4', 'Wali Kelas 5', 'Wali Kelas 6']);
             $table->string('rank')->nullable();
             $table->timestamps();
         });
