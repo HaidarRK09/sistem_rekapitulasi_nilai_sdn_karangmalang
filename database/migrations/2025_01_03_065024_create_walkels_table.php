@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
-            $table->string('nip')->nullable();
-            $table->string('nuptk')->nullable();
-            $table->string('place_of_birth')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->string('education')->nullable();
+            $table->string('nip');
+            $table->string('nuptk');
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
+            $table->string('education');
             $table->enum('position', ['Wali Kelas 1', 'Wali Kelas 2', 'Wali Kelas 3', 'Wali Kelas 4', 'Wali Kelas 5', 'Wali Kelas 6']);
-            $table->string('rank')->nullable();
+            $table->string('rank');
             $table->timestamps();
         });
     }

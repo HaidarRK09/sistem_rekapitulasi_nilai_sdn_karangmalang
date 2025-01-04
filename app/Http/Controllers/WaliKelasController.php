@@ -15,62 +15,71 @@ class WaliKelasController extends Controller
         $orderDirection = $request->input('order_direction', 'asc');
 
         $user = auth()->user();
-        $waliKelas = Walkel::where('user_id', $user->id)->first();
-        
-        $class = str_replace('Wali Kelas ', 'Kelas ', $waliKelas->position);
 
-        $siswas = Siswa::with('nilai')
+        if ($user->role == 'admin') {
+            // Use correct column names for WaliKelas table
+            $validOrderColumns = ['name', 'position', 'id'];
+            if (!in_array($orderBy, $validOrderColumns)) {
+                $orderBy = 'id';
+            }
+
+            $waliKelasList = Walkel::orderBy($orderBy, $orderDirection)->get();
+            $siswas = collect(); // Empty collection for admin
+        } else {
+            $class = str_replace('Wali Kelas ', 'Kelas ', $user->waliKelas->position);
+            $siswas = Siswa::with('nilai')
             ->where('class', $class)
-            // ->where('walikelas_id', $user->id)
-            ->orderBy($orderBy, $orderDirection)
-            ->get()
-            ->map(function ($siswa) {
-                $subjects = [
-                    'agama',
-                    'pancasila',
-                    'indonesia',
-                    'matematika',
-                    'pjok',
-                    'sbk',
-                    'inggris',
-                    'muatanlokal'
-                ];
-                $totalAverage = 0;
-                $totalSubjects = count($subjects);
-                foreach ($subjects as $subject) {
-                    $totalScore = 0;
-                    $subjectTasks = ['tugas1', 'tugas2', 'tugas3', 'tugas4', 'tugas5', 'uts', 'uas'];
+                ->orderBy($orderBy, $orderDirection)
+                ->get()
+                ->map(function ($siswa) {
+                    $subjects = [
+                        'agama',
+                        'pancasila',
+                        'indonesia',
+                        'matematika',
+                        'pjok',
+                        'sbk',
+                        'inggris',
+                        'muatanlokal'
+                    ];
+                    $totalAverage = 0;
+                    $totalSubjects = count($subjects);
+                    foreach ($subjects as $subject) {
+                        $totalScore = 0;
+                        $subjectTasks = ['tugas1', 'tugas2', 'tugas3', 'tugas4', 'tugas5', 'uts', 'uas'];
 
-                    foreach ($subjectTasks as $task) {
-                        $totalScore += $siswa->nilai->sum($subject . '_' . $task);
+                        foreach ($subjectTasks as $task) {
+                            $totalScore += $siswa->nilai->sum($subject . '_' . $task);
+                        }
+
+                        $subjectAverage = $totalScore / 7;
+                        $totalAverage += $subjectAverage;
                     }
 
-                    $subjectAverage = $totalScore / 7;
-                    $totalAverage += $subjectAverage;
-                }
+                    $siswa->average = $totalAverage / $totalSubjects;
+                    return $siswa;
+                })
+                ->sortBy(function ($siswa) use ($orderBy) {
+                    if ($orderBy === 'name') {
+                        return strtolower($siswa->name);
+                    }
 
-                $siswa->average = $totalAverage / $totalSubjects;
-                return $siswa;
-            })
-            ->sortBy(function ($siswa) use ($orderBy) {
-                if ($orderBy === 'name') {
+                    if ($orderBy === 'class') {
+                        preg_match('/(\d+)([A-Za-z]+)/', $siswa->class, $matches);
+                        return [(int)$matches[1], $matches[2]];
+                    }
+
+                    if ($orderBy === 'average') {
+                        return $siswa->average;
+                    }
+
                     return strtolower($siswa->name);
-                }
+                }, SORT_REGULAR, $orderDirection === 'asc')
+                ->values();
+            $waliKelasList = collect(); // Empty collection for non-admin
+        }
 
-                if ($orderBy === 'class') {
-                    preg_match('/(\d+)([A-Za-z]+)/', $siswa->class, $matches);
-                    return [(int)$matches[1], $matches[2]];
-                }
-
-                if ($orderBy === 'average') {
-                    return $siswa->average;
-                }
-
-                return strtolower($siswa->name);
-            }, SORT_REGULAR, $orderDirection === 'asc')
-            ->values();
-
-        return view('walikelas.index', compact('siswas', 'orderBy', 'orderDirection'));
+        return view('walikelas.index', compact('siswas', 'waliKelasList', 'orderBy', 'orderDirection'));
     }
 
     // public function index()

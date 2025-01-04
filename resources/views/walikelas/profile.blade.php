@@ -33,8 +33,7 @@
 
             <div class="mb-3">
                 <label for="date_of_birth" class="form-label">Tanggal Lahir</label>
-                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-                    value="{{ old('date_of_birth', $waliKelas->date_of_birth ?? '') }}" required>
+                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth', $waliKelas->date_of_birth ? $waliKelas->date_of_birth->format('Y-m-d') : '') }}" required>
             </div>
 
             <div class="mb-3">

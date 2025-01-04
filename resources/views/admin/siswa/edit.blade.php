@@ -3,7 +3,7 @@
 @section('content')
     <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 30px;">Edit Siswa</h1>
     <div class="container mt-5">
-        <form action="{{ route('walikelas.update', $siswa->id) }}" method="POST">
+        <form action="{{ route('admin.siswa.update', $siswa->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">

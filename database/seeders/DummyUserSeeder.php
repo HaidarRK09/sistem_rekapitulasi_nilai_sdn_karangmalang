@@ -22,7 +22,7 @@ class DummyUserSeeder extends Seeder
             [
                 'name' => 'wali kelas',
                 'email' => 'wali@gmail.com',
-                'role' => 'wali_kelas',
+                'role' => 'walikelas',
                 'password' => bcrypt('admin123'),
             ],
             [

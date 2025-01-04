@@ -21,30 +21,51 @@
                 </svg>
                 <span class="ml-2">SDN Karangmalang</span>
             </div>
+
+            <!-- Sidebar Menu -->
             <nav class="mt-5">
                 <ul>
-                    <li class="{{ request()->is('admin*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
-                        <a href="{{ route('admin.index') }}" class="flex items-center p-3 text-gray-700">
-                            <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" class="w-6 h-6">
-                            <span class="ml-3">Dashboard</span>
-                        </a>
-                    </li>
-                    <div class="mt-1 border-t pt-1">
+                    <!-- Admin Section (akses semua menu) -->
+                    @if (Auth::user()->role == 'admin')
+                        <li class="{{ request()->is('admin') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
+                            <a href="{{ route('admin.index') }}" class="flex items-center p-3 text-gray-700">
+                                <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" class="w-6 h-6">
+                                <span class="ml-3">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="{{ request()->is('admin/walikelas*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
+                            <a href="{{ route('admin.walikelas.index') }}" class="flex items-center p-3 text-gray-700">
+                                <img src="{{ asset('images/teacher.png') }}" alt="Wali Kelas Icon" class="w-6 h-6">
+                                <span class="ml-3">Wali Kelas</span>
+                            </a>
+                        </li>
+                        <li class="{{ request()->is('admin/siswa*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
+                            <a href="{{ route('admin.siswa.index') }}" class="flex items-center p-3 text-gray-700">
+                                <img src="{{ asset('images/student.png') }}" alt="Siswa Icon" class="w-6 h-6">
+                                <span class="ml-3">Siswa</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    <!-- Wali Kelas Section -->
+                    @if (Auth::user()->role == 'walikelas')
                         <li class="{{ request()->is('walikelas*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
                             <a href="{{ route('walikelas.index') }}" class="flex items-center p-3 text-gray-700">
                                 <img src="{{ asset('images/teacher.png') }}" alt="Wali Kelas Icon" class="w-6 h-6">
                                 <span class="ml-3">Wali Kelas</span>
                             </a>
                         </li>
-                        <div class="mt-1 border-t pt-1">
-                            <li class="{{ request()->is('siswa*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
-                                <a href="{{ route('siswa.index') }}" class="flex items-center p-3 text-gray-700">
-                                    <img src="{{ asset('images/student.png') }}" alt="Siswa Icon" class="w-6 h-6">
-                                    <span class="ml-3">Siswa</span>
-                                </a>
-                            </li>
-                        </div>
-                    </div>
+                    @endif
+
+                    <!-- Siswa Section -->
+                    @if (Auth::user()->role == 'siswa')
+                        <li class="{{ request()->is('siswa*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
+                            <a href="{{ route('siswa.index') }}" class="flex items-center p-3 text-gray-700">
+                                <img src="{{ asset('images/student.png') }}" alt="Siswa Icon" class="w-6 h-6">
+                                <span class="ml-3">Siswa</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
@@ -69,18 +90,31 @@
                         </svg>
                     </button>
 
+                    {{-- <!-- Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
+                        <a href="{{ route(Auth::user()->role . '.profile') }}"
+                            class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
+                        <form action="{{ route('logout') }}" method="POST"
+                            class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                            @csrf
+                            <button type="submit" class="w-full text-left">Logout</button>
+                        </form>
+                    </div> --}}
+
                     <!-- Dropdown Menu -->
                     <div id="profileDropdown"
                         class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
                         @if (Auth::user()->role == 'siswa')
                             <a href="{{ route('siswa.profile') }}"
                                 class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
-                        @elseif (Auth::user()->role == 'wali_kelas')
+                        @elseif (Auth::user()->role == 'walikelas')
                             <a href="{{ route('walikelas.profile') }}"
                                 class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
+                            {{-- @elseif (Auth::user()->role == 'admin')
+                            <a href="{{ route('admin.profile') }}"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a> --}}
                         @endif
-                        {{-- <a href="{{ route('walikelas.profile') }}"
-                            class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a> --}}
                         <form action="{{ route('logout') }}" method="POST"
                             class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                             @csrf
@@ -98,35 +132,24 @@
                     </div>
                 @endif
                 <div class="w-full h-full border-2 border-dashed border-gray-300 p-4">
-                    <!-- Dynamic Content -->
-                    <div class="col">
-                        @yield('content')
-                    </div>
+                    @yield('content')
                 </div>
             </main>
 
             <!-- Footer -->
             <div class="footer bg-white text-center py-3">
-                <p>&copy; 2025 Sistem Rekapitulasi Nilai Digital</p>
+                <p>&copy; 2025 Sistem Rekapitulasi Nilai Digital SDN Karangmalang</p>
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             function toggleDropdown() {
                 const dropdown = document.getElementById('profileDropdown');
                 dropdown.classList.toggle('hidden');
             }
-
-            // Tutup dropdown saat klik di luar
-            document.addEventListener('click', function(event) {
-                const dropdown = document.getElementById('profileDropdown');
-                const button = document.getElementById('profileMenuButton');
-                if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-                    dropdown.classList.add('hidden');
-                }
-            });
         </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

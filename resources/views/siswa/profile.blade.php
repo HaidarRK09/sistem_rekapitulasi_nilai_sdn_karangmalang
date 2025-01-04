@@ -60,6 +60,11 @@
             </div>
 
             <div class="mb-3">
+                <label for="address" class="form-label">Alamat</label>
+                <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $siswa->address) }}" required>
+            </div>
+
+            <div class="mb-3">
                 <label for="phone" class="form-label">Nomor Telepon</label>
                 <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $siswa->phone) }}" required>
             </div>
