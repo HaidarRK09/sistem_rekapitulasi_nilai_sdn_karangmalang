@@ -21,6 +21,10 @@ class Walkel extends Model
         'rank',
     ];
 
+    protected $casts = [
+        'date_of_birth' => 'datetime',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

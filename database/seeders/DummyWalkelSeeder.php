@@ -17,7 +17,7 @@ class DummyWalkelSeeder extends Seeder
             'name' => 'Budi Santoso',
             'email' => 'budi@gmail.com',
             'password' => bcrypt('budi123'),
-            'role' => 'wali_kelas',
+            'role' => 'walikelas',
         ]);
 
         Walkel::create([
@@ -36,7 +36,7 @@ class DummyWalkelSeeder extends Seeder
             'name' => 'Andi Wijaya',
             'email' => 'andi@gmail.com',
             'password' => bcrypt('andi123'),
-            'role' => 'wali_kelas',
+            'role' => 'walikelas',
         ]);
 
         Walkel::create([

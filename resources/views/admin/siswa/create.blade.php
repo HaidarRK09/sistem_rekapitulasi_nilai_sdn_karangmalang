@@ -3,7 +3,7 @@
 @section('content')
     <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 30px;">Tambah Siswa</h1>
     <div class="container mt-5">
-        <form action="{{ route('walikelas.store') }}" method="POST">
+        <form action="{{ route('admin.siswa.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Nama Siswa</label>
@@ -11,14 +11,7 @@
             </div>
             <div class="mb-3">
                 <label for="class" class="form-label">Kelas</label>
-                <select name="class" id="class" class="form-control" required>
-                    <option value="Kelas 1">Kelas 1</option>
-                    <option value="Kelas 2">Kelas 2</option>
-                    <option value="Kelas 3">Kelas 3</option>
-                    <option value="Kelas 4">Kelas 4</option>
-                    <option value="Kelas 5">Kelas 5</option>
-                    <option value="Kelas 6">Kelas 6</option>
-                </select>
+                <input type="text" name="class" id="class" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="nisn" class="form-label">NISN</label>
@@ -58,7 +51,7 @@
                 <label for="phone" class="form-label">Nomor Telepon Orang Tua / Wali</label>
                 <input type="text" name="phone" id="phone" class="form-control" required>
             </div>
-            <a href="{{ route('walikelas.index') }}" class="btn btn-danger">Kembali</a>
+            <a href="{{ route('admin.siswa.index') }}" class="btn btn-danger">Kembali</a>
             <button type="submit" class="btn btn-primary ml-2">Simpan</button>
         </form>
     </div>

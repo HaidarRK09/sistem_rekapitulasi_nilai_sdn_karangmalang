@@ -5,9 +5,9 @@
 
     <div class="container d-flex justify-content-center mt-5">
         <div class="w-100">
-            {{-- <a href="{{ route('walikelas.create') }}" class="btn btn-primary mb-3">Tambah Siswa</a> --}}
+            <a href="{{ route('admin.siswa.create') }}" class="btn btn-primary mb-3">Tambah Siswa</a>
 
-            <div class="dropdown d-inline-block">
+            <div class="dropdown d-inline-block ms-2">
                 <button class="btn btn-secondary dropdown-toggle mb-3" type="button" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Urutkan Berdasarkan
@@ -15,7 +15,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'name', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
+                            href="{{ route('admin.siswa.index', ['order_by' => 'name', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
                             Nama
                             @if ($orderBy === 'name')
                                 <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
@@ -24,7 +24,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'class', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
+                            href="{{ route('admin.siswa.index', ['order_by' => 'class', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
                             Kelas
                             @if ($orderBy === 'class')
                                 <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
@@ -33,7 +33,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'average', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
+                            href="{{ route('admin.siswa.index', ['order_by' => 'average', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
                             Rata-Rata Nilai
                             @if ($orderBy === 'average')
                                 <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
@@ -42,7 +42,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item"
-                            href="{{ route('walikelas.index', ['order_by' => 'id', 'order_direction' => 'asc']) }}">
+                            href="{{ route('admin.siswa.index', ['order_by' => 'id', 'order_direction' => 'asc']) }}">
                             Reset
                         </a>
                     </li>
@@ -67,15 +67,15 @@
                             <td>{{ $siswa->class }}</td>
                             <td>{{ $siswa->average ? number_format($siswa->average, 2) : '-' }}</td>
                             <td>
-                                <a href="{{ route('walikelas.show', $siswa->id) }}" class="btn btn-sm btn-info">Lihat Data</a>
-                                <a href="{{ route('walikelas.nilai', $siswa->id) }}" class="btn btn-sm btn-warning">Edit Nilai</a>
-                                {{-- <form action="{{ route('walikelas.destroy', $siswa->id) }}" method="POST"
+                                <a href="{{ route('admin.siswa.show', $siswa->id) }}" class="btn btn-sm btn-info">Lihat Data</a>
+                                <a href="{{ route('admin.siswa.nilai', $siswa->id) }}" class="btn btn-sm btn-warning">Edit Nilai</a>
+                                <form action="{{ route('admin.siswa.destroy', $siswa->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"
                                         onclick="return confirm('Apakah Anda yakin ingin menghapus siswa ini?')">Hapus</button>
-                                </form> --}}
+                                </form>
                             </td>
                         </tr>
                     @endforeach

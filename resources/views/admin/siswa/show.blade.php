@@ -40,8 +40,8 @@
             <input type="text" id="phone" class="form-control" value="{{ $siswa->phone }}" readonly>
         </div>
         <div class="d-flex">
-            <a href="{{ route('walikelas.index') }}" class="btn btn-danger me-2">Kembali</a>
-            {{-- <a href="{{ route('walikelas.edit', $siswa->id) }}" class="btn btn-primary">Edit Data</a> --}}
+            <a href="{{ route('admin.siswa.index') }}" class="btn btn-danger me-2">Kembali</a>
+            <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="btn btn-primary">Edit Data</a>
         </div>
     </div>
 @endsection
