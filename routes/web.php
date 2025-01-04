@@ -32,8 +32,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::get('/walikelas', [AdmincController::class, 'walikelas']);
     
-    Route::get('/siswa', [AdmincController::class, 'siswa']);
-    // Route::get('/guru', [AdmincController::class, 'guru'])
+    // Route::get('/siswa', [AdmincController::class, 'siswa']);
+    Route::get('/siswa', [AdmincController::class, 'siswa'])->name('admin.siswa');
+    
 
-    Route::get('logout', [SesiController::class, 'logout']);
+    Route::get('logout', [SesiController::class, 'logout'])->name('logout');
+
 });

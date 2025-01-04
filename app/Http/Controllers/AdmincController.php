@@ -9,9 +9,7 @@ class AdmincController extends Controller
 {
     function index()
     {
-        echo "hallo, selamat datang";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>Logout>></h1>";
+        return view('admin.dashboard', ['user' => Auth::user()]);
     }
 
     function admin()
