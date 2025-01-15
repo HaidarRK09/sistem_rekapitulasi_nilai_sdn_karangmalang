@@ -13,42 +13,53 @@ class DummyWalkelSeeder extends Seeder
      */
     public function run(): void
     {
-        $user1 = User::create([
-            'name' => 'Budi Santoso',
-            'email' => 'budi@gmail.com',
-            'password' => bcrypt('budi123'),
-            'role' => 'walikelas',
-        ]);
+        $positions = [
+            'Wali Kelas 1',
+            'Wali Kelas 2',
+            'Wali Kelas 3',
+            'Wali Kelas 4',
+            'Wali Kelas 5',
+            'Wali Kelas 6'
+        ];
+        $names = [
+            'Budi Santoso',
+            'Andi Wijaya',
+            'Nur Hasanah',
+            'Dewi Rahmawati',
+            'Agus Pancoro',
+            'Siti Kusumawati'
+        ];
+        $places_of_birth = ['Bandung', 'Jakarta', 'Surabaya', 'Medan', 'Yogyakarta', 'Semarang'];
+        $dates_of_birth = ['1980-05-10', '1978-08-15', '1982-03-20', '1979-11-25', '1981-07-30', '1983-02-14'];
+        $educations = [
+            'S1 Pendidikan',
+            'S1 Pendidikan Matematika',
+            'S1 Pendidikan Bahasa Indonesia',
+            'S1 Pendidikan IPA',
+            'S1 Pendidikan IPS',
+            'S1 Pendidikan PKN'
+        ];
+        $ranks = ['Golongan IV/a', 'Golongan III/c', 'Golongan III/b', 'Golongan III/a', 'Golongan II/d', 'Golongan II/c'];
 
-        Walkel::create([
-            'user_id' => $user1->id,
-            'name' => 'Budi Santoso',
-            'nip' => '1987654321',
-            'nuptk' => '1234567890',
-            'place_of_birth' => 'Bandung',
-            'date_of_birth' => '1980-05-10',
-            'education' => 'S1 Pendidikan',
-            'position' => 'Wali Kelas 5',
-            'rank' => 'Golongan IV/a',
-        ]);
+        for ($i = 0; $i < 6; $i++) {
+            $user = User::create([
+                'name' => $names[$i],
+                'email' => strtolower(str_replace(' ', '', $names[$i])) . '@gmail.com',
+                'password' => bcrypt('name' . '123'),
+                'role' => 'walikelas',
+            ]);
 
-        $user2 = User::create([
-            'name' => 'Andi Wijaya',
-            'email' => 'andi@gmail.com',
-            'password' => bcrypt('andi123'),
-            'role' => 'walikelas',
-        ]);
-
-        Walkel::create([
-            'user_id' => $user2->id,
-            'name' => 'Andi Wijaya',
-            'nip' => '9876543210',
-            'nuptk' => '0987654321',
-            'place_of_birth' => 'Jakarta',
-            'date_of_birth' => '1978-08-15',
-            'education' => 'S1 Pendidikan Matematika',
-            'position' => 'Wali Kelas 3',
-            'rank' => 'Golongan III/c',
-        ]);
+            Walkel::create([
+                'user_id' => $user->id,
+                'name' => $names[$i],
+                'nip' => '98765432' . $i,
+                'nuptk' => '09876543' . $i,
+                'place_of_birth' => $places_of_birth[$i],
+                'date_of_birth' => $dates_of_birth[$i],
+                'education' => $educations[$i],
+                'position' => $positions[$i],
+                'rank' => $ranks[$i],
+            ]);
+        }
     }
 }

@@ -7,7 +7,7 @@
 
         <div class="row mt-4">
             <!-- Statistics Card 1 -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-header text-center bg-primary text-white">
                         Total Siswa
@@ -20,7 +20,7 @@
             </div>
 
             <!-- Statistics Card 2 -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-header text-center bg-success text-white">
                         Total Wali Kelas
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <!-- Statistics Card 3 -->
+            {{-- <!-- Statistics Card 3 -->
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-header text-center bg-warning text-white">
@@ -43,7 +43,7 @@
                         <a href="#" class="btn btn-primary">Lihat Pengumuman</a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
