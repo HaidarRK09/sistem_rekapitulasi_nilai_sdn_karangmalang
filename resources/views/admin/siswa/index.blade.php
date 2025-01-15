@@ -34,7 +34,7 @@
                     <li>
                         <a class="dropdown-item"
                             href="{{ route('admin.siswa.index', ['order_by' => 'average', 'order_direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
-                            Rata-Rata Nilai
+                            Nilai Rapor
                             @if ($orderBy === 'average')
                                 <span class="ms-2">{{ $orderDirection === 'asc' ? '↑' : '↓' }}</span>
                             @endif
@@ -55,7 +55,7 @@
                         <th>No.</th>
                         <th>Nama Siswa</th>
                         <th>Kelas</th>
-                        <th>Rata-Rata Nilai</th>
+                        <th>Nilai Rapor</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
