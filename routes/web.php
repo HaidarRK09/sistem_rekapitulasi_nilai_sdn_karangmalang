@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
     Route::get('/siswa/profile', [SiswaController::class, 'editProfile'])->name('siswa.profile');
     Route::post('/siswa/profile/update', [SiswaController::class, 'updateProfile'])->name('siswa.updateProfile');
+    Route::get('/siswa/print', [SiswaController::class, 'print'])->name('siswa.print');
     
     Route::post('logout', [SesiController::class, 'logout'])->name('logout');
 });
