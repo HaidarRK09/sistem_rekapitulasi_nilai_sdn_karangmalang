@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 30px; text-align: center;">Daftar Wali Kelas</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center">Daftar Wali Kelas</h1>
 
-    <div class="container d-flex justify-content-center mt-5">
-        <div class="w-100">
+    <div class="container mx-auto px-4">
+        <div class="w-full">
             <a href="{{ route('admin.walikelas.create') }}" class="btn btn-primary mb-3">Tambah Wali Kelas</a>
 
             <div class="dropdown d-inline-block ms-2">
@@ -40,36 +40,37 @@
                 </ul>
             </div>
 
-            <table class="table table-bordered table-striped text-center">
-                <thead class="table-dark">
-                    <tr>
-                        <th>No.</th>
-                        <th>Nama Wali Kelas</th>
-                        <th>Jabatan</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($waliKelasList as $index => $waliKelas)
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-center">
+                    <thead class="table-dark">
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $waliKelas->name }}</td>
-                            <td>{{ $waliKelas->position }}</td>
-                            <td>
-                                <a href="{{ route('admin.walikelas.show', $waliKelas->id) }}" class="btn btn-sm btn-info">Lihat
-                                    Data</a>
-                                <form action="{{ route('admin.walikelas.destroy', $waliKelas->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus wali kelas ini?')">Hapus</button>
-                                </form>
-                            </td>
+                            <th>No.</th>
+                            <th>Nama Wali Kelas</th>
+                            <th>Jabatan</th>
+                            <th>Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($waliKelasList as $index => $waliKelas)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $waliKelas->name }}</td>
+                                <td>{{ $waliKelas->position }}</td>
+                                <td>
+                                    <a href="{{ route('admin.walikelas.show', $waliKelas->id) }}" class="btn btn-sm btn-info">Lihat Data</a>
+                                    <form action="{{ route('admin.walikelas.destroy', $waliKelas->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus wali kelas ini?')">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

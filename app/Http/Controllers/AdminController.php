@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Siswa;
 use App\Models\Walkel;
 use App\Models\User;
 use App\Models\Nilai;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
