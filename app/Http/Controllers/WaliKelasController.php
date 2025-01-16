@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Siswa;
 use App\Models\Nilai;
 use App\Models\Walkel;
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class WaliKelasController extends Controller
 {
@@ -259,5 +260,36 @@ class WaliKelasController extends Controller
         }
 
         return redirect()->route('walikelas.profile')->with('success', 'Profil berhasil diperbarui!');
+    }
+
+    public function print($siswa_id)
+    {
+        // Mendapatkan data siswa yang terkait dengan ID
+        $siswa = Siswa::with('nilai')->find($siswa_id);
+
+        // Memastikan bahwa data siswa ditemukan
+        if (!$siswa) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+
+        // Daftar mata pelajaran
+        $subjects = [
+            'agama',
+            'pancasila',
+            'indonesia',
+            'matematika',
+            'pjok',
+            'sbk',
+            'inggris',
+            'muatanlokal'
+        ];
+
+        // Menghasilkan PDF
+        $pdf = Pdf::loadView('walikelas.print', compact('siswa', 'subjects'));
+
+        // Membuat nama file PDF dengan format nisn_nama_kelas.pdf
+        $filename = "{$siswa->nisn}_{$siswa->name}_{$siswa->class}.pdf";
+
+        return $pdf->download($filename);
     }
 }
