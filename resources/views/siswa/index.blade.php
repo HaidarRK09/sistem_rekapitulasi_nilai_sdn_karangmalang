@@ -68,6 +68,7 @@
                     </tr>
                 </tfoot>
             </table>
+            <a href="{{ route('siswa.print') }}" class="btn btn-primary mb-3">Print Nilai</a>
         @else
             <p class="text-center">Data nilai tidak ditemukan.</p>
         @endif

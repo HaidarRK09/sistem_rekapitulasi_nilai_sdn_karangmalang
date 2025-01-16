@@ -44,7 +44,8 @@
 
             <div class="mb-3">
                 <label for="position" class="form-label">Jabatan</label>
-                <select class="form-control" id="position" name="position" required>
+                <input type="text" class="form-control" id="position" name="position" value="{{ old('position', $waliKelas->position) }}" readonly>
+                {{-- <select class="form-control" id="position" name="position" required>
                     <option value="Wali Kelas 1"
                         {{ old('position', $waliKelas->position ?? '') == 'Wali Kelas 1' ? 'selected' : '' }}>Wali Kelas 1
                     </option>
@@ -63,7 +64,7 @@
                     <option value="Wali Kelas 6"
                         {{ old('position', $waliKelas->position ?? '') == 'Wali Kelas 6' ? 'selected' : '' }}>Wali Kelas 6
                     </option>
-                </select>
+                </select> --}}
             </div>
 
             <div class="mb-3">

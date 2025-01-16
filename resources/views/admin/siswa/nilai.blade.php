@@ -19,7 +19,7 @@
                         <th>Tugas 5</th>
                         <th>UTS</th>
                         <th>UAS</th>
-                        <th>Rata-rata</th>
+                        <th>Rata-Rata Nilai</th>
                     </tr>
                 </thead>
                 <tbody>
