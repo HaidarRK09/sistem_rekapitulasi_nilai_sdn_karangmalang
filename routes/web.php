@@ -47,12 +47,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/walikelas/siswa/{id}/nilai', [WaliKelasController::class, 'storeNilai'])->name('walikelas.storeNilai');
     Route::get('/walikelas/profile', [WaliKelasController::class, 'editProfile'])->name('walikelas.profile');
     Route::post('/walikelas/profile/update', [WaliKelasController::class, 'updateProfile'])->name('walikelas.updateProfile');
-    Route::get('/walikelas/siswa/{id}/nilai/print', [WaliKelasController::class, 'print'])->name('walikelas.print');
+    // Route::get('/walikelas/siswa/{id}/nilai/print', [WaliKelasController::class, 'print'])->name('walikelas.print');
+    Route::get('/walikelas/siswa/{id}/nilai/print', [WaliKelasController::class, 'showPrint'])->name('walikelas.showPrint');
 
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
     Route::get('/siswa/profile', [SiswaController::class, 'editProfile'])->name('siswa.profile');
     Route::post('/siswa/profile/update', [SiswaController::class, 'updateProfile'])->name('siswa.updateProfile');
-    Route::get('/siswa/print', [SiswaController::class, 'print'])->name('siswa.print');
+    // Route::get('/siswa/print', [SiswaController::class, 'print'])->name('siswa.print');
+    Route::get('/siswa/print', [SiswaController::class, 'showPrint'])->name('siswa.showPrint');
     
     Route::post('logout', [SesiController::class, 'logout'])->name('logout');
 });
