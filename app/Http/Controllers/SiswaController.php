@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Siswa;
 use App\Models\Nilai;
+use App\Models\Walkel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SiswaController extends Controller
@@ -92,13 +93,55 @@ class SiswaController extends Controller
         return redirect()->route('siswa.profile')->with('success', 'Profil berhasil diperbarui');
     }
 
-    public function print()
+    // public function print()
+    // {
+    //     // Mendapatkan user yang sedang login
+    //     $user = Auth::user();
+
+    //     // Mendapatkan data siswa yang terkait dengan user
+    //     $siswa = Siswa::where('user_id', $user->id)->with('nilai')->first();
+
+    //     // Daftar mata pelajaran
+    //     $subjects = [
+    //         'agama',
+    //         'pancasila',
+    //         'indonesia',
+    //         'matematika',
+    //         'pjok',
+    //         'sbk',
+    //         'inggris',
+    //         'muatanlokal'
+    //     ];
+
+    //     // Memastikan bahwa data siswa ditemukan
+    //     if (!$siswa) {
+    //         return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+    //     }
+
+    //     // Menghasilkan PDF
+    //     $pdf = Pdf::loadView('siswa.print', compact('siswa', 'subjects'));
+
+    //     // Membuat nama file PDF dengan format nisn_nama_kelas.pdf
+    //     $filename = "{$siswa->nisn}_{$siswa->name}_{$siswa->class}.pdf";
+
+    //     return $pdf->download($filename);
+    // }
+
+    public function showPrint()
     {
         // Mendapatkan user yang sedang login
         $user = Auth::user();
 
         // Mendapatkan data siswa yang terkait dengan user
         $siswa = Siswa::where('user_id', $user->id)->with('nilai')->first();
+
+        // Mengambil data wali kelas berdasarkan kelas siswa
+        $waliKelas = Walkel::where('position', 'Wali ' . $siswa->class)->first();
+
+        // Memastikan bahwa data siswa ditemukan
+        if (!$siswa) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
 
         // Daftar mata pelajaran
         $subjects = [
@@ -112,17 +155,10 @@ class SiswaController extends Controller
             'muatanlokal'
         ];
 
-        // Memastikan bahwa data siswa ditemukan
-        if (!$siswa) {
-            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
-        }
-
         // Menghasilkan PDF
-        $pdf = Pdf::loadView('siswa.print', compact('siswa', 'subjects'));
+        $pdf = Pdf::loadView('siswa.print', compact('siswa', 'subjects', 'waliKelas'));
 
-        // Membuat nama file PDF dengan format nisn_nama_kelas.pdf
-        $filename = "{$siswa->nisn}_{$siswa->name}_{$siswa->class}.pdf";
-
-        return $pdf->download($filename);
+        // Menampilkan PDF di browser
+        return $pdf->stream("{$siswa->nisn}_{$siswa->name}_{$siswa->class}.pdf");
     }
 }

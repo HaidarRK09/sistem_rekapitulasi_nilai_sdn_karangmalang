@@ -70,7 +70,8 @@
                     </tfoot>
                 </table>
             </div>
-            <a href="{{ route('siswa.print') }}" class="btn btn-primary mb-3">Print Nilai</a>
+            {{-- <a href="{{ route('siswa.print') }}" class="btn btn-primary mb-3">Print Nilai</a> --}}
+                <a href="{{ route('siswa.showPrint', $siswa->id) }}" class="btn btn-primary" target="_blank">Print Nilai</a>
         @else
             <p class="text-center">Data nilai tidak ditemukan.</p>
         @endif

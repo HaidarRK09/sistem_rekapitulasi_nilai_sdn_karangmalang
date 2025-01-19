@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nilai Siswa</title>
+    <title class>Nilai Siswa</title>
     <style>
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 30px;
         }
         th, td {
             border: 1px solid black;
@@ -15,13 +16,35 @@
         th {
             background-color: #f2f2f2;
         }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid black;
+            margin: 20px 0;
+        }
+        .signature-section {
+            margin-top: 50px;
+            text-align: left;
+            width: 50%;
+            float: right;
+        }
+        .signature-section p {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
     <h1>Daftar Nilai Siswa</h1>
-    <p>Nama: {{ $siswa->name }}</p>
-    <p>Kelas: {{ $siswa->class }}</p>
-    <p>NISN: {{ $siswa->nisn }}</p>
+    <p><strong>Nama Sekolah:</strong> SDN 1 Karangmalang</p>
+    <p><strong>Alamat:</strong> Jl. Pasarean No.16, Karangmalang</p>
+    <p><strong>Nama Siswa:</strong> {{ $siswa->name }}</p>
+    <p><strong>NISN:</strong> {{ $siswa->nisn }}</p>
+    <p><strong>Kelas:</strong> {{ $siswa->class }}</p>
+
+    <hr>
 
     <table>
         <thead>
@@ -91,5 +114,13 @@
             </tr>
         </tfoot>
     </table>
+
+    <div class="signature-section">
+        <p>Karangmalang, {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM YYYY') }}</p>
+        <p>Wali Kelas</p>
+        <br><br><br>
+        <p>{{ $waliKelas->name ?? 'Tidak tersedia' }}</p>
+        <p>NIP. {{ $waliKelas->nip ?? 'Tidak tersedia' }}</p>
+    </div>
 </body>
 </html>

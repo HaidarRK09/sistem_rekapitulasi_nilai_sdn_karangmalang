@@ -86,7 +86,8 @@
                     <a href="{{ route('walikelas.index') }}" class="btn btn-danger">Kembali</a>
                     <button type="submit" class="btn btn-primary ml-2">Simpan</button>
                 </div>
-                <a href="{{ route('walikelas.print', $siswa->id) }}" class="btn btn-primary">Print Nilai</a>
+                {{-- <a href="{{ route('walikelas.print', $siswa->id) }}" class="btn btn-primary">Print Nilai</a> --}}
+                <a href="{{ route('walikelas.showPrint', $siswa->id) }}" class="btn btn-primary" target="_blank">Print Nilai</a>
             </div>
         </form>
     </div>
