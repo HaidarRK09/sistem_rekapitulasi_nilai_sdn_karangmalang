@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use App\Models\Walkel;
 use App\Models\User;
 use App\Models\Nilai;
+use App\Models\Mapel;
 
 class AdminController extends Controller
 {
@@ -125,7 +126,7 @@ class AdminController extends Controller
         $orderDirection = $request->input('order_direction', 'asc');
 
         $siswas = Siswa::with('nilai')
-        ->get()
+            ->get()
             ->map(function ($siswa) {
                 $subjects = [
                     'agama',
@@ -266,7 +267,11 @@ class AdminController extends Controller
     public function nilaiSiswa($id)
     {
         $siswa = Siswa::with('nilai')->findOrFail($id);
-        return view('admin.siswa.nilai', compact('siswa'));
+        $waliKelas = Walkel::where('position', 'Wali ' . $siswa->class)->first();
+        $mapels = Mapel::all();
+        $komponenNilai = ['tugas1', 'tugas2', 'tugas3', 'tugas4', 'tugas5', 'uts', 'uas'];
+
+        return view('admin.siswa.print', compact('siswa', 'waliKelas', 'mapels', 'komponenNilai'));
     }
 
     public function storeNilaiSiswa(Request $request, $id)

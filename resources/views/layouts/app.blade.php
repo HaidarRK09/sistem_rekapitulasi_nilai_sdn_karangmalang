@@ -54,10 +54,12 @@
         }
 
         .dropdown-menu {
-            top: 100%; /* Position the dropdown below the button */
+            top: 100%;
+            /* Position the dropdown below the button */
             left: auto;
             right: 0;
-            margin-top: 0.5rem; /* Add some space between the button and the dropdown */
+            margin-top: 0.5rem;
+            /* Add some space between the button and the dropdown */
         }
     </style>
 </head>
@@ -87,19 +89,22 @@
                     @if (Auth::user()->role == 'admin')
                         <li class="{{ request()->is('admin') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
                             <a href="{{ route('admin.index') }}" class="flex items-center p-3 text-gray-700">
-                                <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon" class="w-6 h-6 sidebar-icon">
+                                <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard Icon"
+                                    class="w-6 h-6 sidebar-icon">
                                 <span class="ml-3 sidebar-text">Dashboard</span>
                             </a>
                         </li>
                         <li class="{{ request()->is('admin/walikelas*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
                             <a href="{{ route('admin.walikelas.index') }}" class="flex items-center p-3 text-gray-700">
-                                <img src="{{ asset('images/teacher.png') }}" alt="Wali Kelas Icon" class="w-6 h-6 sidebar-icon">
+                                <img src="{{ asset('images/teacher.png') }}" alt="Wali Kelas Icon"
+                                    class="w-6 h-6 sidebar-icon">
                                 <span class="ml-3 sidebar-text">Wali Kelas</span>
                             </a>
                         </li>
                         <li class="{{ request()->is('admin/siswa*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
                             <a href="{{ route('admin.siswa.index') }}" class="flex items-center p-3 text-gray-700">
-                                <img src="{{ asset('images/student.png') }}" alt="Siswa Icon" class="w-6 h-6 sidebar-icon">
+                                <img src="{{ asset('images/student.png') }}" alt="Siswa Icon"
+                                    class="w-6 h-6 sidebar-icon">
                                 <span class="ml-3 sidebar-text">Siswa</span>
                             </a>
                         </li>
@@ -109,7 +114,8 @@
                     @if (Auth::user()->role == 'walikelas')
                         <li class="{{ request()->is('walikelas*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
                             <a href="{{ route('walikelas.index') }}" class="flex items-center p-3 text-gray-700">
-                                <img src="{{ asset('images/teacher.png') }}" alt="Wali Kelas Icon" class="w-6 h-6 sidebar-icon">
+                                <img src="{{ asset('images/teacher.png') }}" alt="Wali Kelas Icon"
+                                    class="w-6 h-6 sidebar-icon">
                                 <span class="ml-3 sidebar-text">Wali Kelas</span>
                             </a>
                         </li>
@@ -119,11 +125,19 @@
                     @if (Auth::user()->role == 'siswa')
                         <li class="{{ request()->is('siswa*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
                             <a href="{{ route('siswa.index') }}" class="flex items-center p-3 text-gray-700">
-                                <img src="{{ asset('images/student.png') }}" alt="Siswa Icon" class="w-6 h-6 sidebar-icon">
+                                <img src="{{ asset('images/student.png') }}" alt="Siswa Icon"
+                                    class="w-6 h-6 sidebar-icon">
                                 <span class="ml-3 sidebar-text">Siswa</span>
                             </a>
                         </li>
                     @endif
+
+                    <li class="{{ request()->is('admin/mapel*') ? 'bg-gray-200' : '' }} hover:bg-gray-200">
+                        <a href="{{ route('admin.mapel.index') }}" class="flex items-center p-3 text-gray-700">
+                            <img src="{{ asset('images/mapel.png') }}" class="w-6 h-6 sidebar-icon" alt="Mapel Icon">
+                            <span class="ml-3 sidebar-text">Mata Pelajaran</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -198,9 +212,11 @@
                 sidebar.classList.toggle('sidebar-collapsed');
                 sidebar.classList.toggle('sidebar-expanded');
                 if (sidebar.classList.contains('sidebar-collapsed')) {
-                    toggleIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />';
+                    toggleIcon.innerHTML =
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />';
                 } else {
-                    toggleIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />';
+                    toggleIcon.innerHTML =
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />';
                 }
             }
         </script>

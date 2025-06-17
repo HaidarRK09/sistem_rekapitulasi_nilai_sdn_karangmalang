@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Siswa;
 use App\Models\Nilai;
 use App\Models\Walkel;
+use App\Models\Mapel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SiswaController extends Controller
@@ -16,149 +17,88 @@ class SiswaController extends Controller
         $orderBy = $request->input('order_by', 'id');
         $orderDirection = $request->input('order_direction', 'asc');
 
-        $user = auth()->user();
+        $user = Auth::user(); // Gunakan Auth::user() untuk konsistensi
+        $mapels = Mapel::all(); // agar tidak undefined
+        $subjects = $mapels->pluck('kode')->toArray();
 
         if ($user->role == 'admin') {
             $siswas = Siswa::with('nilai')
-            ->orderBy($orderBy, $orderDirection)
+                ->orderBy($orderBy, $orderDirection)
                 ->get()
-                ->map(function ($siswa) {
-                    $subjects = [
-                        'agama',
-                        'pancasila',
-                        'indonesia',
-                        'matematika',
-                        'pjok',
-                        'sbk',
-                        'inggris',
-                        'muatanlokal'
-                    ];
+                ->map(function ($siswa) use ($subjects) {
                     $totalAverage = 0;
                     $totalSubjects = count($subjects);
+
                     foreach ($subjects as $subject) {
                         $totalScore = 0;
                         $subjectTasks = ['tugas1', 'tugas2', 'tugas3', 'tugas4', 'tugas5', 'uts', 'uas'];
-
                         foreach ($subjectTasks as $task) {
                             $totalScore += $siswa->nilai->sum($subject . '_' . $task);
                         }
-
-                        $subjectAverage = $totalScore / 7;
+                        $subjectAverage = $totalScore / count($subjectTasks);
                         $totalAverage += $subjectAverage;
                     }
 
-                    $siswa->average = $totalAverage / $totalSubjects;
+                    $siswa->average = $totalSubjects > 0 ? $totalAverage / $totalSubjects : 0;
                     return $siswa;
                 })
                 ->sortBy(function ($siswa) use ($orderBy) {
-                    if ($orderBy === 'name') {
-                        return strtolower($siswa->name);
-                    }
-
+                    if ($orderBy === 'name') return strtolower($siswa->name);
                     if ($orderBy === 'class') {
                         preg_match('/(\d+)([A-Za-z]+)/', $siswa->class, $matches);
-                        return [(int)$matches[1], $matches[2]];
+                        return [(int)($matches[1] ?? 0), $matches[2] ?? ''];
                     }
-
-                    if ($orderBy === 'average') {
-                        return $siswa->average;
-                    }
-
+                    if ($orderBy === 'average') return $siswa->average;
                     return strtolower($siswa->name);
                 }, SORT_REGULAR, $orderDirection === 'asc')
                 ->values();
 
-            // Define $siswa and $nilais as empty for admin
             $siswa = null;
             $nilais = collect();
         } else {
-            $siswas = collect(); // Empty collection for non-admin
-            $siswa = Siswa::where('user_id', $user->id)->first();
+            $siswas = collect();
+            $siswa = Siswa::where('user_id', $user->id)->with('nilai')->first();
             $nilais = $siswa ? $siswa->nilai : collect();
         }
 
-        return view('siswa.index', compact('siswas', 'siswa', 'nilais', 'orderBy', 'orderDirection'));
+        return view('siswa.index', compact('siswas', 'siswa', 'nilais', 'orderBy', 'orderDirection', 'mapels'));
     }
 
     public function editProfile()
     {
-        $siswa = auth()->user()->siswa;
+        $siswa = Auth::user()->siswa;
         return view('siswa.profile', compact('siswa'));
     }
 
     public function updateProfile(Request $request)
     {
-        $siswa = auth()->user()->siswa;
+        $siswa = Auth::user()->siswa;
         $siswa->update($request->all());
         return redirect()->route('siswa.profile')->with('success', 'Profil berhasil diperbarui');
     }
 
-    // public function print()
-    // {
-    //     // Mendapatkan user yang sedang login
-    //     $user = Auth::user();
-
-    //     // Mendapatkan data siswa yang terkait dengan user
-    //     $siswa = Siswa::where('user_id', $user->id)->with('nilai')->first();
-
-    //     // Daftar mata pelajaran
-    //     $subjects = [
-    //         'agama',
-    //         'pancasila',
-    //         'indonesia',
-    //         'matematika',
-    //         'pjok',
-    //         'sbk',
-    //         'inggris',
-    //         'muatanlokal'
-    //     ];
-
-    //     // Memastikan bahwa data siswa ditemukan
-    //     if (!$siswa) {
-    //         return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
-    //     }
-
-    //     // Menghasilkan PDF
-    //     $pdf = Pdf::loadView('siswa.print', compact('siswa', 'subjects'));
-
-    //     // Membuat nama file PDF dengan format nisn_nama_kelas.pdf
-    //     $filename = "{$siswa->nisn}_{$siswa->name}_{$siswa->class}.pdf";
-
-    //     return $pdf->download($filename);
-    // }
-
     public function showPrint()
     {
-        // Mendapatkan user yang sedang login
         $user = Auth::user();
-
-        // Mendapatkan data siswa yang terkait dengan user
         $siswa = Siswa::where('user_id', $user->id)->with('nilai')->first();
 
-        // Mengambil data wali kelas berdasarkan kelas siswa
-        $waliKelas = Walkel::where('position', 'Wali ' . $siswa->class)->first();
-
-        // Memastikan bahwa data siswa ditemukan
         if (!$siswa) {
             return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
         }
 
-        // Daftar mata pelajaran
-        $subjects = [
-            'agama',
-            'pancasila',
-            'indonesia',
-            'matematika',
-            'pjok',
-            'sbk',
-            'inggris',
-            'muatanlokal'
-        ];
+        $waliKelas = Walkel::where('position', 'Wali ' . $siswa->class)->first();
 
-        // Menghasilkan PDF
-        $pdf = Pdf::loadView('siswa.print', compact('siswa', 'subjects', 'waliKelas'));
+        $mapels = Mapel::all();
+        $komponenNilai = ['tugas1', 'tugas2', 'tugas3', 'tugas4', 'tugas5', 'uts', 'uas'];
 
-        // Menampilkan PDF di browser
-        return $pdf->stream("{$siswa->nisn}_{$siswa->name}_{$siswa->class}.pdf");
+        return view('siswa.print', compact('siswa', 'waliKelas', 'mapels', 'komponenNilai'));
+    }
+
+    public function nilai($id)
+    {
+        $siswa = Siswa::with('nilai')->findOrFail($id);
+        $mapels = Mapel::all();
+
+        return view('admin.siswa.nilai', compact('siswa', 'mapels'));
     }
 }

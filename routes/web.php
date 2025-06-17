@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\WaliKelasController;
+use App\Http\Controllers\MapelController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
@@ -36,6 +37,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/siswa/siswa/{id}/nilai', [AdminController::class, 'nilaiSiswa'])->name('admin.siswa.nilai');
     Route::post('/admin/siswa/siswa/{id}/nilai', [AdminController::class, 'storeNilaiSiswa'])->name('admin.siswa.storeNilai');
 
+    Route::get('/admin/mapel', [MapelController::class, 'index'])->name('admin.mapel.index');
+    Route::get('/admin/mapel/create', [MapelController::class, 'create'])->name('admin.mapel.create');
+    Route::post('/admin/mapel', [MapelController::class, 'store'])->name('admin.mapel.store');
+    Route::get('/admin/mapel/{mapel}/edit', [MapelController::class, 'edit'])->name('admin.mapel.edit');
+    Route::put('/admin/mapel/{mapel}', [MapelController::class, 'update'])->name('admin.mapel.update');
+    Route::delete('/admin/mapel/{mapel}', [MapelController::class, 'destroy'])->name('admin.mapel.destroy');
+
     Route::get('/walikelas/siswa', [WaliKelasController::class, 'index'])->name('walikelas.index');
     Route::get('/walikelas/siswa/create', [WaliKelasController::class, 'create'])->name('walikelas.create');
     Route::post('/walikelas/siswa', [WaliKelasController::class, 'store'])->name('walikelas.store');
@@ -55,6 +63,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/siswa/profile/update', [SiswaController::class, 'updateProfile'])->name('siswa.updateProfile');
     // Route::get('/siswa/print', [SiswaController::class, 'print'])->name('siswa.print');
     Route::get('/siswa/print', [SiswaController::class, 'showPrint'])->name('siswa.showPrint');
-    
+
     Route::post('logout', [SesiController::class, 'logout'])->name('logout');
 });
